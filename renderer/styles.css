@@ -1,0 +1,687 @@
+/* Basic reset and styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #4a9eff;
+    text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+    margin-bottom: 10px;
+}
+
+header h2 {
+    font-size: 1.5em;
+    color: #8cc8ff;
+    font-weight: 300;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+#loading-screen {
+    text-align: center;
+    font-size: 1.2em;
+    color: #b0b0b0;
+}
+
+#loading-screen::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #4a9eff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s ease-in-out infinite;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#game-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    color: #4a9eff;
+}
+
+/* Game Layout */
+.game-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+/* Turn Display */
+.turn-display {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #8cc8ff;
+    font-weight: bold;
+}
+
+.turn-display span:first-child {
+    color: #4a9eff;
+}
+
+/* Card Container */
+.card-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.situation-card {
+    width: 90%;
+    max-width: 600px;
+    height: 70%;
+    max-height: 400px;
+    background-color: #333;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 25px;
+    overflow-y: auto;
+    border: 2px solid #444;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.situation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+}
+
+.card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-scenario {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.card-choices {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.choice-button {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.accept-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.accept-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.reject-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.reject-button:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
+/* Resources Panel */
+.resources-panel {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.resource-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.resource-section:hover {
+    transform: translateY(-3px);
+}
+
+.resource-icon {
+    font-size: 2em;
+    margin-bottom: 8px;
+}
+
+.resource-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.resource-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #444;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.resource-value {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+/* Fire Nation Styles */
+.fire-resource {
+    background-color: rgba(255, 87, 34, 0.2);
+    border: 1px solid rgba(255, 87, 34, 0.5);
+}
+
+.fire-progress {
+    background-color: #FF5722;
+}
+
+/* Water Tribe Styles */
+.water-resource {
+    background-color: rgba(33, 150, 243, 0.2);
+    border: 1px solid rgba(33, 150, 243, 0.5);
+}
+
+.water-progress {
+    background-color: #2196F3;
+}
+
+/* Earth Kingdom Styles */
+.earth-resource {
+    background-color: rgba(139, 69, 19, 0.2);
+    border: 1px solid rgba(139, 69, 19, 0.5);
+}
+
+.earth-progress {
+    background-color: #8B4513;
+}
+
+/* Air Nomad Styles */
+.air-resource {
+    background-color: rgba(158, 158, 158, 0.2);
+    border: 1px solid rgba(158, 158, 158, 0.5);
+}
+
+.air-progress {
+    background-color: #9E9E9E;
+}
+
+/* Resource Warning States */
+.resource-section.critical {
+    border: 2px solid rgba(244, 67, 54, 0.8);
+    background-color: rgba(244, 67, 54, 0.1);
+    animation: critical-pulse 2s ease-in-out infinite;
+}
+
+.resource-section.warning {
+    border: 2px solid rgba(255, 152, 0, 0.8);
+    background-color: rgba(255, 152, 0, 0.1);
+}
+
+.resource-section.maxed {
+    border: 2px solid rgba(76, 175, 80, 0.8);
+    background-color: rgba(76, 175, 80, 0.1);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+@keyframes critical-pulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(244, 67, 54, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(244, 67, 54, 0.8);
+    }
+}
+
+/* Resource Change Animations */
+.resource-increase {
+    animation: pulse-green 1s ease;
+}
+
+.resource-decrease {
+    animation: pulse-red 1s ease;
+}
+
+@keyframes pulse-green {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); background-color: rgba(76, 175, 80, 0.3); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulse-red {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); background-color: rgba(244, 67, 54, 0.3); }
+    100% { transform: scale(1); }
+}
+
+/* Game End Screen */
+.game-end-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.game-end-screen.fade-in {
+    opacity: 1;
+}
+
+.game-end-screen.fade-out {
+    opacity: 0;
+}
+
+.game-end-content {
+    background-color: #333;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    transform: scale(0.8);
+    transition: transform 0.5s ease;
+}
+
+.game-end-screen.fade-in .game-end-content {
+    transform: scale(1);
+}
+
+.game-end-screen.fade-out .game-end-content {
+    transform: scale(0.8);
+}
+
+.game-end-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.victory {
+    color: #4CAF50;
+    text-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+}
+
+.defeat {
+    color: #f44336;
+    text-shadow: 0 0 15px rgba(244, 67, 54, 0.7);
+}
+
+.game-end-content p {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+#turn-count {
+    font-size: 1.1em;
+    color: #8cc8ff;
+    margin-bottom: 25px;
+}
+
+.reset-button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    background-color: #4a9eff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(74, 158, 255, 0.3);
+}
+
+.reset-button:hover {
+    background-color: #3a8eef;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(74, 158, 255, 0.5);
+}
+
+.reset-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(74, 158, 255, 0.3);
+}
+
+/* Final Resources Display */
+.final-resources {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: rgba(42, 42, 42, 0.8);
+    border-radius: 10px;
+    border: 1px solid #444;
+}
+
+.final-resources h3 {
+    margin-bottom: 15px;
+    text-align: center;
+    color: #8cc8ff;
+    font-size: 1.1em;
+}
+
+.resource-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.final-resource-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: rgba(68, 68, 68, 0.5);
+    border: 1px solid #555;
+}
+
+.final-resource-item.critical {
+    background-color: rgba(244, 67, 54, 0.2);
+    border-color: rgba(244, 67, 54, 0.6);
+    color: #ff6b6b;
+}
+
+.final-resource-item.maxed {
+    background-color: rgba(76, 175, 80, 0.2);
+    border-color: rgba(76, 175, 80, 0.6);
+    color: #81c784;
+}
+
+.final-resource-item.normal {
+    background-color: rgba(68, 68, 68, 0.5);
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+.resource-name {
+    font-weight: 500;
+}
+
+.resource-value {
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-layout {
+        padding: 10px;
+    }
+    
+    .situation-card {
+        width: 95%;
+        height: 60%;
+        padding: 15px;
+    }
+    
+    .card-scenario {
+        font-size: 1em;
+    }
+    
+    .resources-panel {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .resource-section {
+        flex: 1 1 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .resource-section {
+        flex: 1 1 100%;
+    }
+    
+    .card-choices {
+        flex-direction: column;
+    }
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #808080;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    
+    header h2 {
+        font-size: 1.2em;
+    }
+}
+
+/* Swipe Handler Styles */
+.situation-card.dragging {
+    cursor: grabbing;
+    transition: none;
+    z-index: 100;
+}
+
+/* Resource Preview Styles */
+.resource-preview {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: none;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.2s ease;
+}
+
+.resource-preview.positive {
+    background-color: rgba(76, 175, 80, 0.9);
+    color: white;
+}
+
+.resource-preview.negative {
+    background-color: rgba(244, 67, 54, 0.9);
+    color: white;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(-5px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Swipe indicator overlays */
+.swipe-indicator {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 3em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 5;
+}
+
+.swipe-indicator.accept {
+    left: 20px;
+    color: rgba(76, 175, 80, 0.7);
+}
+
+.swipe-indicator.reject {
+    right: 20px;
+    color: rgba(244, 67, 54, 0.7);
+}
+
+.situation-card.dragging .swipe-indicator {
+    opacity: 1;
+}
+
+/* Card container adjustments for swipe */
+.card-container {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Touch-friendly adjustments */
+@media (max-width: 768px) {
+    .situation-card {
+        cursor: grab;
+    }
+    
+    .situation-card.dragging {
+        cursor: grabbing;
+    }
+    
+    .resource-preview {
+        font-size: 0.8em;
+        padding: 3px 6px;
+    }
+}
+
+/* Loading Indicator Styles */
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #4a9eff;
+    font-size: 1.2em;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #444;
+    border-top: 4px solid #4a9eff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+.loading-indicator p {
+    margin: 0;
+    font-weight: 300;
+}
+
+.loading-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #8cc8ff;
+    font-style: italic;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}

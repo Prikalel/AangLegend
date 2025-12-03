@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Легенда об Анге, Повелитель Народов</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Легенда об Анге</h1>
+            <h2>Повелитель Народов</h2>
+        </header>
+        
+        <main>
+            <div id="game-container">
+                <div id="loading-screen">
+                    <p>Загрузка игры...</p>
+                </div>
+                
+                <div id="game-screen" class="hidden">
+                    <!-- Game UI Structure -->
+                    <div class="game-layout">
+                        <!-- Turn/Epoch Display -->
+                        <div class="turn-display">
+                            <span>Эпоха: </span>
+                            <span id="turn-counter">1</span>
+                        </div>
+                        
+                        <!-- Central area for situation card -->
+                        <div class="card-container">
+                            <div id="situation-card" class="situation-card">
+                                <div id="loading-indicator" class="loading-indicator hidden">
+                                    <div class="loading-spinner"></div>
+                                    <p>Генерация ситуации...</p>
+                                </div>
+                                <div id="card-content" class="card-content">
+                                    <!-- Card content will be dynamically inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bottom panel for resources -->
+                        <div class="resources-panel">
+                            <div class="resource-section fire-resource">
+                                <div class="resource-icon">🔥</div>
+                                <div class="resource-info">
+                                    <div class="resource-bar">
+                                        <div id="fire-progress" class="progress-bar fire-progress"></div>
+                                    </div>
+                                    <div class="resource-value">
+                                        <span id="fire-value">10</span>/20
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="resource-section water-resource">
+                                <div class="resource-icon">💦</div>
+                                <div class="resource-info">
+                                    <div class="resource-bar">
+                                        <div id="water-progress" class="progress-bar water-progress"></div>
+                                    </div>
+                                    <div class="resource-value">
+                                        <span id="water-value">10</span>/20
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="resource-section earth-resource">
+                                <div class="resource-icon">🗻</div>
+                                <div class="resource-info">
+                                    <div class="resource-bar">
+                                        <div id="earth-progress" class="progress-bar earth-progress"></div>
+                                    </div>
+                                    <div class="resource-value">
+                                        <span id="earth-value">10</span>/20
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="resource-section air-resource">
+                                <div class="resource-icon">💨</div>
+                                <div class="resource-info">
+                                    <div class="resource-bar">
+                                        <div id="air-progress" class="progress-bar air-progress"></div>
+                                    </div>
+                                    <div class="resource-value">
+                                        <span id="air-value">10</span>/20
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p id="app-version">Версия: Загрузка...</p>
+        </footer>
+    </div>
+    
+    <!-- Game End Modal (will be dynamically created) -->
+    
+    <script src="gameState.js"></script>
+    <script src="llmService.js"></script>
+    <script src="uiManager.js"></script>
+    <script src="swipeHandler.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "name": "aang-legend",
+  "version": "1.0.0",
+  "description": "Легенда об Анге, Повелитель Народов",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win"
+  },
+  "keywords": [
+    "electron",
+    "game",
+    "aang"
+  ],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "22.12.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.aanglegend.game",
+    "productName": "Легенда об Анге, Повелитель Народов",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json",
+      "renderer/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Легенда об Анге",
+      "runAfterFinish": true,
+      "language": "1049"
+    }
+  }
+}
