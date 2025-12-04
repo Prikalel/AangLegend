@@ -1,6 +1,6 @@
 # Легенда об Анге, Повелитель Народов
 
-<video src="gameplay-video.mp4" width="320" height="240" controls></video>
+[геймплейное видео](https://github.com/Prikalel/AangLegend/raw/refs/heads/main/gameplay-video.mp4)
 
 ## Описание игры
 
