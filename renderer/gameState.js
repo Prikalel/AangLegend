@@ -169,78 +169,6 @@ function generateCard() {
 }
 
 /**
- * Generate a random card with scenario and choices (fallback method)
- * @returns {Object} Card object with scenario and choices
- */
-function generateRandomCard() {
-    const scenarios = [
-        {
-            scenario: "Деревня просит вашей помощи в защите от магов огня.",
-            accept: { fire: -2, water: 1, earth: 1, air: 0 },
-            reject: { fire: 1, water: -1, earth: 0, air: 0 }
-        },
-        {
-            scenario: "Засуха угрожает южному племени воды.",
-            accept: { fire: -1, water: 3, earth: -1, air: 0 },
-            reject: { fire: 0, water: -2, earth: 1, air: 0 }
-        },
-        {
-            scenario: "Гражданам Царства Земли нужна помощь в восстановлении после землетрясения.",
-            accept: { fire: 0, water: 1, earth: 2, air: -1 },
-            reject: { fire: 1, water: -1, earth: -2, air: 1 }
-        },
-        {
-            scenario: "Кочевники воздуха ищут руководства в практиках медитации.",
-            accept: { fire: -1, water: 0, earth: 0, air: 2 },
-            reject: { fire: 1, water: 1, earth: -1, air: -2 }
-        },
-        {
-            scenario: "Прибывает торговое предложение от Нации Огня.",
-            accept: { fire: 2, water: -1, earth: -1, air: 0 },
-            reject: { fire: -1, water: 1, earth: 1, air: 0 }
-        },
-        {
-            scenario: "Загадочная болезнь распространяется среди племени воды.",
-            accept: { fire: -2, water: 2, earth: 0, air: 0 },
-            reject: { fire: 0, water: -3, earth: 1, air: 1 }
-        },
-        {
-            scenario: "Шахтеры Царства Земли обнаруживают новую жилу ресурсов.",
-            accept: { fire: 0, water: -1, earth: 3, air: -1 },
-            reject: { fire: 1, water: 0, earth: -2, air: 0 }
-        },
-        {
-            scenario: "Маги воздуха предлагают новую технику тренировок.",
-            accept: { fire: -1, water: -1, earth: 0, air: 3 },
-            reject: { fire: 1, water: 1, earth: 1, air: -2 }
-        }
-    ];
-
-    // Select a random scenario
-    const randomIndex = Math.floor(Math.random() * scenarios.length);
-    const selectedScenario = scenarios[randomIndex];
-
-    // Add some randomness to the resource changes
-    const randomizeChanges = (changes) => {
-        const randomized = {};
-        Object.keys(changes).forEach(resource => {
-            const baseValue = changes[resource];
-            const randomFactor = Math.random() * 0.4 - 0.2; // ±20% randomization
-            randomized[resource] = Math.round(baseValue * (1 + randomFactor));
-        });
-        return randomized;
-    };
-
-    currentCard = {
-        scenario: selectedScenario.scenario,
-        accept: randomizeChanges(selectedScenario.accept),
-        reject: randomizeChanges(selectedScenario.reject)
-    };
-
-    return currentCard;
-}
-
-/**
  * Show or hide the loading indicator
  * @param {boolean} show - Whether to show the loading indicator
  */
@@ -324,7 +252,6 @@ if (typeof module !== 'undefined' && module.exports) {
         checkGameEnd,
         resetGame,
         generateCard,
-        generateRandomCard,
         applyCardChoice,
         getCurrentCard,
         isResourceValueValid,
@@ -340,7 +267,6 @@ if (typeof module !== 'undefined' && module.exports) {
         checkGameEnd,
         resetGame,
         generateCard,
-        generateRandomCard,
         applyCardChoice,
         getCurrentCard,
         isResourceValueValid,

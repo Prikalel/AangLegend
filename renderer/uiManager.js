@@ -54,17 +54,44 @@ function displayCard(card) {
     
     const cardContent = document.getElementById('card-content');
     
+    // Button order matches swipe direction:
+    //   swipe LEFT  = reject -> "Отклонить" on the left
+    //   swipe RIGHT = accept -> "Принять"  on the right
     cardContent.innerHTML = `
         <div class="card-scenario">${card.scenario}</div>
         <div class="card-choices">
-            <button id="accept-button" class="choice-button accept-button">Принять</button>
             <button id="reject-button" class="choice-button reject-button">Отклонить</button>
+            <button id="accept-button" class="choice-button accept-button">Принять</button>
         </div>
     `;
     
-    // Add event listeners to the choice buttons
-    document.getElementById('accept-button').addEventListener('click', () => handleCardChoice('accept'));
-    document.getElementById('reject-button').addEventListener('click', () => handleCardChoice('reject'));
+    const acceptButton = document.getElementById('accept-button');
+    const rejectButton = document.getElementById('reject-button');
+    
+    // Click handlers
+    acceptButton.addEventListener('click', () => handleCardChoice('accept'));
+    rejectButton.addEventListener('click', () => handleCardChoice('reject'));
+    
+    // Hover/focus preview of resource changes (mirrors the swipe preview).
+    const showPreview = (choice) => {
+        if (window.swipeHandler && typeof window.swipeHandler.showResourcePreview === 'function') {
+            window.swipeHandler.showResourcePreview(choice);
+        }
+    };
+    const hidePreview = () => {
+        if (window.swipeHandler && typeof window.swipeHandler.hideResourcePreview === 'function') {
+            window.swipeHandler.hideResourcePreview();
+        }
+    };
+    
+    acceptButton.addEventListener('mouseenter', () => showPreview('accept'));
+    rejectButton.addEventListener('mouseenter', () => showPreview('reject'));
+    acceptButton.addEventListener('mouseleave', hidePreview);
+    rejectButton.addEventListener('mouseleave', hidePreview);
+    acceptButton.addEventListener('focus', () => showPreview('accept'));
+    rejectButton.addEventListener('focus', () => showPreview('reject'));
+    acceptButton.addEventListener('blur', hidePreview);
+    rejectButton.addEventListener('blur', hidePreview);
     
     // Update turn counter
     const currentState = window.gameState.getCurrentState();
@@ -372,34 +399,20 @@ if (typeof module !== 'undefined' && module.exports) {
  * Generate and display the first card using LLM service
  */
 async function generateAndDisplayFirstCard() {
-    try {
-        const firstCard = await window.gameState.generateCard();
-        displayCard(firstCard);
-    } catch (error) {
-        console.error('Error generating first card:', error);
-        // Fallback to local generation
-        const fallbackCard = window.gameState.generateRandomCard();
-        displayCard(fallbackCard);
-    }
+    const firstCard = await window.gameState.generateCard();
+    displayCard(firstCard);
 }
 
 /**
  * Generate and display the next card using LLM service
  */
 async function generateAndDisplayNextCard() {
-    try {
-        // Clear current card content immediately to show loading
-        const cardContent = document.getElementById('card-content');
-        if (cardContent) {
-            cardContent.innerHTML = '<div class="loading-placeholder">Генерация следующей ситуации...</div>';
-        }
-        
-        const nextCard = await window.gameState.generateCard();
-        displayCard(nextCard);
-    } catch (error) {
-        console.error('Error generating next card:', error);
-        // Fallback to local generation
-        const fallbackCard = window.gameState.generateRandomCard();
-        displayCard(fallbackCard);
+    // Clear current card content immediately to show loading
+    const cardContent = document.getElementById('card-content');
+    if (cardContent) {
+        cardContent.innerHTML = '<div class="loading-placeholder">Генерация следующей ситуации...</div>';
     }
+    
+    const nextCard = await window.gameState.generateCard();
+    displayCard(nextCard);
 }

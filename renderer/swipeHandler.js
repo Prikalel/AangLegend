@@ -259,12 +259,16 @@ if (typeof module !== 'undefined' && module.exports) {
     // Node.js environment
     module.exports = {
         initSwipeHandler,
-        resetSwipeHandler
+        resetSwipeHandler,
+        showResourcePreview,
+        hideResourcePreview
     };
 } else {
     // Browser environment - attach to window
     window.swipeHandler = {
         initSwipeHandler,
-        resetSwipeHandler
+        resetSwipeHandler,
+        showResourcePreview,
+        hideResourcePreview
     };
 }
