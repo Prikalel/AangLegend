@@ -157,29 +157,15 @@ function resetGame() {
 }
 
 /**
- * Generate a card using LLM service or fallback
- * @returns {Promise<Object>} Promise that resolves to a card object with scenario and choices
+ * Generate a card using only the locally bundled fallback scenarios.
+ * The network/LLM text generation has been removed so the game works
+ * fully offline as a static web build.
+ * @returns {Object} Card object with scenario and choices
  */
-async function generateCard() {
-    try {
-        // Show loading indicator
-        showLoadingIndicator(true);
-        
-        // Try to generate card using LLM service
-        const card = await window.llmService.generateCard();
-        currentCard = card;
-        return card;
-    } catch (error) {
-        console.error('Error generating card with LLM:', error);
-        
-        // Fallback to local generation if LLM fails
-        const fallbackCard = window.llmService.generateFallbackScenario();
-        currentCard = fallbackCard;
-        return fallbackCard;
-    } finally {
-        // Hide loading indicator
-        showLoadingIndicator(false);
-    }
+function generateCard() {
+    const card = window.llmService.generateFallbackScenario();
+    currentCard = card;
+    return card;
 }
 
 /**
