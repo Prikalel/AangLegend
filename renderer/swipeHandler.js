@@ -92,6 +92,10 @@ function handleStart(event) {
     } else {
         startX = event.clientX;
     }
+    // Reset currentX to the start so a plain click (no movement) is not
+    // misread as a swipe — without this, currentX keeps its stale value from
+    // the previous interaction and handleEnd applies the choice a second time.
+    currentX = startX;
     
     // Add dragging class for visual feedback
     cardElement.classList.add('dragging');
