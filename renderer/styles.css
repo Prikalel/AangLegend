@@ -10,6 +10,7 @@ body {
     background-color: #1a1a1a;
     color: #e0e0e0;
     height: 100vh;
+    height: 100dvh; /* dynamic viewport height: fixes mobile browser UI clipping */
     overflow: hidden;
 }
 
@@ -17,6 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    height: 100dvh;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -88,7 +90,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2em;
+    font-size: 1em; /* avoid em-compounding that made text huge on mobile */
     color: #4a9eff;
 }
 
@@ -497,39 +499,152 @@ main {
     font-family: monospace;
 }
 
-/* Responsive Design */
+/* ============================================
+   Responsive Design — mobile optimizations
+   Fixes: oversized text + clipped resource bars
+   ============================================ */
 @media (max-width: 768px) {
-    .game-layout {
-        padding: 10px;
+    .container {
+        height: 100dvh;
+        padding: 8px;
     }
-    
-    .situation-card {
-        width: 95%;
-        height: 60%;
-        padding: 15px;
+
+    header {
+        margin-bottom: 8px;
     }
-    
-    .card-scenario {
+
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    header h2 {
         font-size: 1em;
     }
-    
-    .resources-panel {
-        flex-wrap: wrap;
+
+    .game-layout {
+        padding: 8px;
+    }
+
+    .turn-display {
+        font-size: 1em;
+        margin-bottom: 8px;
+    }
+
+    /* Situation card fills the available middle space */
+    .card-container {
+        margin-bottom: 30px; /* leave room so resource-change badges aren't covered by the card */
+        align-items: stretch;
+    }
+
+    .situation-card {
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        max-height: none;
+        padding: 14px;
+    }
+
+    .card-scenario {
+        font-size: 0.95em;
+        line-height: 1.5;
+        margin-bottom: 12px;
+    }
+
+    .card-choices {
         gap: 10px;
     }
-    
+
+    .choice-button {
+        padding: 10px 12px;
+        font-size: 0.9em;
+    }
+
+    /* Keep ALL FOUR fractions visible in a single compact row */
+    .resources-panel {
+        flex-wrap: nowrap;
+        gap: 6px;
+        padding: 8px;
+        flex-shrink: 0;
+    }
+
     .resource-section {
-        flex: 1 1 45%;
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 6px 4px;
+    }
+
+    .resource-icon {
+        font-size: 1.4em;
+        margin-bottom: 4px;
+    }
+
+    .resource-bar {
+        height: 8px;
+        margin-bottom: 3px;
+    }
+
+    .resource-value {
+        font-size: 0.8em;
+    }
+
+    .resource-preview {
+        font-size: 0.75em;
+        padding: 2px 5px;
+        top: -24px;
+    }
+
+    footer {
+        margin-top: 8px;
+        font-size: 0.8em;
+    }
+
+    /* Game-end modal: scrollable on small screens */
+    .game-end-screen {
+        overflow-y: auto;
+        align-items: flex-start;
+        padding: 12px 0;
+    }
+
+    .game-end-content {
+        padding: 20px;
+        max-width: 92%;
+        margin: 0 auto;
+    }
+
+    .game-end-content h2 {
+        font-size: 1.8em;
+    }
+
+    .game-end-content p {
+        font-size: 1em;
     }
 }
 
+/* Small phones */
 @media (max-width: 480px) {
-    .resource-section {
-        flex: 1 1 100%;
+    header h1 {
+        font-size: 1.4em;
     }
-    
-    .card-choices {
-        flex-direction: column;
+
+    header h2 {
+        font-size: 0.9em;
+    }
+
+    .card-scenario {
+        font-size: 0.9em;
+    }
+
+    .resource-icon {
+        font-size: 1.2em;
+    }
+
+    .resource-value {
+        font-size: 0.75em;
+    }
+
+    .choice-button {
+        padding: 9px 8px;
+        font-size: 0.85em;
     }
 }
 
@@ -544,20 +659,7 @@ footer {
     display: none !important;
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-    
-    header h1 {
-        font-size: 2em;
-    }
-    
-    header h2 {
-        font-size: 1.2em;
-    }
-}
+/* (handled by the consolidated mobile rules above) */
 
 /* Swipe Handler Styles */
 .situation-card.dragging {
@@ -577,7 +679,7 @@ footer {
     font-weight: bold;
     font-size: 0.9em;
     display: none;
-    z-index: 10;
+    z-index: 200; /* always above the dragging card (z-index: 100) */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     animation: fadeIn 0.2s ease;
 }
@@ -640,8 +742,8 @@ footer {
     }
     
     .resource-preview {
-        font-size: 0.8em;
-        padding: 3px 6px;
+        font-size: 0.75em;
+        padding: 2px 5px;
     }
 }
 
