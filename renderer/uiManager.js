@@ -138,6 +138,13 @@ function handleCardChoice(choice) {
             // Generate and display next card using LLM service
             generateAndDisplayNextCard();
         }
+        
+        // Cross-promo: at epoch 10 offer another game from the same developer
+        if (currentState.turn === 10) {
+            setTimeout(() => {
+                alert('Вы достигли 10-й эпохи! Попробуйте другую игру от того же разработчика — ShittyMaze:\nhttps://prikalel.gitlab.io/shittymaze-build/');
+            }, 500);
+        }
     }
 }
 
